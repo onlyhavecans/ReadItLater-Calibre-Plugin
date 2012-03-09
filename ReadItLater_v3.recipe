@@ -24,7 +24,7 @@ class Readitlater(BasicNewsRecipe):
     oldest_article        = 7
     max_articles_per_feed = 50
     minimum_articles      = 10
-	mark_as_read_after_dl = True
+    mark_as_read_after_dl = True
     no_stylesheets        = True
     use_embedded_content  = False
     needs_subscription    = True
@@ -106,7 +106,7 @@ class Readitlater(BasicNewsRecipe):
             print response.info()
 
     def cleanup(self):
-		if mark_as_read_after_dl:
-        	self.mark_as_read(self.readList)
-		else:
-			pass
+        if mark_as_read_after_dl:
+            self.mark_as_read(self.readList)
+        else:
+            pass
