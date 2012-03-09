@@ -106,7 +106,7 @@ class Readitlater(BasicNewsRecipe):
             print response.info()
 
     def cleanup(self):
-        if mark_as_read_after_dl:
+        if self.mark_as_read_after_dl:
             self.mark_as_read(self.readList)
         else:
             pass
