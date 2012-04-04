@@ -7,7 +7,8 @@ It's currently called "Version Three" because I am the third person to work on i
 * Displays articles from oldest to newest
 * Uses max_articles_per_feed to determine how many articles to download per eBook (Default 50)
 * Has a minimum_articles setting at the top. Plugin fails to run if you don't have enough articles (Default 10, set to 0 to disable)
-* Marks downloaded articles read
+* Marks downloaded articles read with option at the top to disable
+* Shows timestamp on the cover under the date
 
 If anyone can think of other features I will consider them.
 
