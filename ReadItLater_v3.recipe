@@ -110,3 +110,22 @@ class Readitlater(BasicNewsRecipe):
             self.mark_as_read(self.readList)
         else:
             pass
+
+    def default_cover(self, cover_file):
+        '''
+        Create a generic cover for recipes that dont have a cover
+        This override adds time to the cover
+        '''
+        try:
+            from calibre.ebooks import calibre_cover
+            title = self.title if isinstance(self.title, unicode) else \
+                    self.title.decode(preferred_encoding, 'replace')
+            date = strftime(self.timefmt)
+            time = strftime('[%I:%M %p]')
+            img_data = calibre_cover(title, date, time)
+            cover_file.write(img_data)
+            cover_file.flush()
+        except:
+            self.log.exception('Failed to generate default cover')
+            return False
+        return True
