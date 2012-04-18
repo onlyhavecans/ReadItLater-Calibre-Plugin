@@ -15,6 +15,8 @@ If you have suggestions of feature suggestions I will consider them. Please subm
 # Changelog
 ## Changes from ReadItLater v3 to Pocket v1.0
 * Name change
+* Pointed to new domain (http://getpocket.com/)
+* Still uses old RIL interface to pull content
 
 ## Changes from 2011 version to ReadItLater v3
 * Displays articles from oldest to newest

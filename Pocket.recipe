@@ -28,7 +28,7 @@ class Pocket(BasicNewsRecipe):
     no_stylesheets        = True
     use_embedded_content  = False
     needs_subscription    = True
-    INDEX                 = u'http://readitlaterlist.com'
+    INDEX                 = u'http://getpocket.com'
     LOGIN                 = INDEX + u'/l'
     readList              = []
 
