@@ -13,6 +13,9 @@ If you have suggestions of feature suggestions I will consider them. Please subm
 * Under "Schedule News Download" Select the new Read It Later v3 custom recipie and fill out your credentials
 
 # Changelog
+## Pocket v1.1
+* Check for article pages that are empty or malformed. Fixes issue #3 (Exception when there is no article)
+
 ## Changes from ReadItLater v3 to Pocket v1.0
 * Name change
 * Pointed to new domain (http://getpocket.com/)
