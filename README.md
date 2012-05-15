@@ -7,10 +7,10 @@ If you have suggestions of feature suggestions I will consider them. Please subm
 
 # Installation
 * Under the "Fetch News" drop down select "Add a Custom Source"
-* Click "Load Recipe From File" and choose the ReadItLater_v3.recipe file
+* Click "Load Recipe From File" and choose the Pocket.recipe file
 * Edit max_articles_per_feed & minimum_articles to set your max and minimum articles downloaded per eBook
 * Save and Close
-* Under "Schedule News Download" Select the new Read It Later v3 custom recipie and fill out your credentials
+* Under "Schedule News Download" Select the new Pocket recipie under custom and fill out your credentials
 
 # Changelog
 ## Pocket v1.1
