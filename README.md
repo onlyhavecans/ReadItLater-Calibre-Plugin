@@ -13,6 +13,10 @@ If you have suggestions of feature suggestions I will consider them. Please subm
 * Under "Schedule News Download" Select the new Pocket recipie under custom and fill out your credentials
 
 # Changelog
+## Pocket v1.2
+* Added new feature to fail with a warning instead of an error when not enough articles are found
+    * This feature is not yet in 0.8.51 so you will still get the conversion error
+
 ## Pocket v1.1
 * Check for article pages that are empty or malformed. Fixes issue #3 (Exception when there is no article)
 
