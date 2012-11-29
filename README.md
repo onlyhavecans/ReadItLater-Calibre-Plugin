@@ -10,9 +10,15 @@ If you have suggestions of feature suggestions I will consider them. Please subm
 * Click "Load Recipe From File" and choose the Pocket.recipe file
 * Edit max_articles_per_feed & minimum_articles to set your max and minimum articles downloaded per eBook
 * Save and Close
-* Under "Schedule News Download" Select the new Pocket recipie under custom and fill out your credentials
+* Under "Schedule News Download" Select the new Pocket recipe under custom and fill out your credentials
 
 # Changelog
+## Pocket v1.3
+* Updated to the new v3 of the API
+* Switched off the old, now broken, text view
+* Added ability to switch between _oldest to newest_ & _newest to oldest_
+* Added ability to filter by tag (only one because of the API)
+
 ## Pocket v1.2
 * Added new feature to fail with a warning instead of an error when not enough articles are found
     * This feature is not yet in 0.8.51 so you will still get the conversion error
