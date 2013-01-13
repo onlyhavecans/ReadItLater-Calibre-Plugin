@@ -61,7 +61,6 @@ class Pocket(BasicNewsRecipe):
             br.submit()
         else:
             self.user_error("This Recipe requires authentication, please configured user & pass")
-            return None
         return br
 
     def get_auth_uri(self):
@@ -70,7 +69,6 @@ class Pocket(BasicNewsRecipe):
         uri = u'{0}&apikey={1!s}'.format(uri, self.apikey)
         if self.username is None or self.password is None:
             self.user_error("Username or password is blank. Pocket no longer supports blank passwords")
-            return []
         else:
             uri = u'{0}&username={1!s}'.format(uri, self.username)
             uri = u'{0}&password={1!s}'.format(uri, self.password)
@@ -177,3 +175,4 @@ class Pocket(BasicNewsRecipe):
             self.abort_recipe_processing(error_message)
         else:
             self.log.exception(error_message)
+            raise RuntimeError(error_message)
