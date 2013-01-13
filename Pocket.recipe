@@ -46,16 +46,24 @@ class Pocket(BasicNewsRecipe):
     articles              = []
 
 
-    #TODO This isn't needed once we get the TextView API
-    def get_browser(self):
-        br = BasicNewsRecipe.get_browser()
-        if self.username is not None:
+    def get_browser(self, *args, **kwargs):
+        """
+        We need to pretend to be a recent version of safari for the mac to prevent User-Agent checks
+        Pocket api requires username and password so fail loudly if it's missing from the config.
+        """
+        kwargs['user_agent'] = 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; en-us) AppleWebKit/533.19.4 (KHTML, like Gecko) Version/5.0.3 Safari/533.19.4'
+        br = BasicNewsRecipe.get_browser(*args, **kwargs)
+        if self.username is not None and self.password is not None:
             br.open(self.legacy_login_url)
             br.select_form(nr=0)
             br['feed_id'] = self.username
-            if self.password is not None:
-                br['password'] = self.password
+            br['password'] = self.password
             br.submit()
+        else:
+            if hasattr(self, 'abort_recipe_processing'):
+                self.abort_recipe_processing("This Recipe requires authentication, please configured user & pass")
+            else:
+                self.log.exception("This Recipe requires authentication, please configured user & pass")
         return br
 
     def get_auth_uri(self):
