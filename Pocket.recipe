@@ -105,7 +105,7 @@ class Pocket(BasicNewsRecipe):
         if len(pocket_feed) < self.minimum_articles:
             self.mark_as_read_after_dl = False
             self.user_error("Only {0} articles retrieved, minimum_articles not reached".format(len(pocket_feed)))
-            return []
+
         for pocket_article in pocket_feed.iteritems():
             self.articles.append({
                 'item_id':      pocket_article[0],
