@@ -1,7 +1,7 @@
 # Pocket recipe for Calibre
 This is a fork of the original 2011 Calibre ReadItLater plugin.
 
-I am currently working on rebranding it to [Pocket](http://getpocket.com/) and moving it to their new webpage/interface. Please bear with me as changes they have made to their backend may affect the current functionality of the plugin.
+Pocket is going through a lot of changes since the name change. Please bear with me as changes they have made to their backend may affect the current functionality of the plugin.
 
 If you have suggestions of feature suggestions I will consider them. Please submit them as issues.
 
@@ -18,6 +18,7 @@ If you have suggestions of feature suggestions I will consider them. Please subm
 * Switched off the old, now broken, text view
 * Added ability to switch between _oldest to newest_ & _newest to oldest_
 * Added ability to filter by tag (only one because of the API)
+* Automatically filters out saved items in the queue that do not have articles (pictures and videos)
 
 ## Pocket v1.2
 * Added new feature to fail with a warning instead of an error when not enough articles are found

@@ -152,10 +152,10 @@ class Pocket(BasicNewsRecipe):
             pass
 
     def default_cover(self, cover_file):
-        '''
+        """
         Create a generic cover for recipes that don't have a cover
         This override adds time to the cover
-        '''
+        """
         try:
             from calibre.ebooks import calibre_cover
             title = self.title if isinstance(self.title, unicode) else \
