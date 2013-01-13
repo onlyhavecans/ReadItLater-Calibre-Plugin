@@ -42,7 +42,7 @@ class Pocket(BasicNewsRecipe):
     index_url             = u'http://getpocket.com'
     read_api_url          = index_url + u'/v3/get'
     modify_api_url        = index_url + u'/v3/send'
-    legacy_login_url      = index_url + u'/l' #TODO delete
+    legacy_login_url      = index_url + u'/l' # We use this to cheat oAuth
     articles              = []
 
 
@@ -106,13 +106,9 @@ class Pocket(BasicNewsRecipe):
             return []
         if len(pocket_feed) < self.minimum_articles:
             self.mark_as_read_after_dl = False
-            if hasattr(self, 'abort_recipe_processing'):
-                self.abort_recipe_processing("Only {0} articles retrieved, minimum_articles not reached".format(len(pocket_feed)))
-            else:
-                self.log.exception("Only {0} articles retrieved, minimum_articles not reached".format(len(pocket_feed)))
-                return []
+            self.user_error("Only {0} articles retrieved, minimum_articles not reached".format(len(pocket_feed)))
+            return []
         for pocket_article in pocket_feed.iteritems():
-            # TODO Get permission to use the private text view API
             self.articles.append({
                 'item_id':      pocket_article[0],
                 'title':        pocket_article[1]['resolved_title'],
