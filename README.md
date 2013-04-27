@@ -19,6 +19,7 @@ If you have suggestions of feature suggestions I will consider them. Please subm
 * Added ability to switch between _oldest to newest_ & _newest to oldest_
 * Added ability to filter by tag (only one because of the API)
 * Automatically filters out saved items in the queue that do not have articles (pictures and videos)
+* Big thanks to Mila Frerichs for the help with the new text view!
 
 ## Pocket v1.2
 * Added new feature to fail with a warning instead of an error when not enough articles are found

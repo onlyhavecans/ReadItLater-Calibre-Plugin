@@ -54,8 +54,7 @@ class Pocket(BasicNewsRecipe):
         We need to pretend to be a recent version of safari for the mac to prevent User-Agent checks
         Pocket api requires username and password so fail loudly if it's missing from the config.
         """
-        kwargs['user_agent'] = 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; en-us) AppleWebKit/533.19.4 (KHTML, like Gecko) Version/5.0.3 Safari/533.19.4'
-        br = BasicNewsRecipe.get_browser(self,user_agent='Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; en-us) AppleWebKit/533.19.4 (KHTML, like Gecko) Version/5.0.3 Safari/533.19.4')
+        br = BasicNewsRecipe.get_browser(self, user_agent='Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; en-us) AppleWebKit/533.19.4 (KHTML, like Gecko) Version/5.0.3 Safari/533.19.4')
         if self.username is not None and self.password is not None:
             br.open(self.legacy_login_url)
             br.select_form(nr=0)
@@ -123,18 +122,16 @@ class Pocket(BasicNewsRecipe):
         print self.articles
         return [("My Pocket Articles for {0}".format(strftime('[%I:%M %p]')), self.articles)]
 
-    def get_obfuscated_article(self,url):
+    def get_obfuscated_article(self, url):
         soup = self.index_to_soup(url)
-        formcheck_script_tag = soup.find('script',text=re.compile("formCheck"))
-        form_check = formcheck_script_tag.split("=")[1].replace("'","").replace(";","").strip()
-        url_elements = url.split("/")
-        article_id = url_elements[-1]
-        data = urllib.urlencode({'itemId':article_id,'formCheck':form_check})
-        response = self.browser.open(self.ajax_url,data)
+        formcheck_script_tag = soup.find('script', text=re.compile("formCheck"))
+        form_check = formcheck_script_tag.split("=")[1].replace("'", "").replace(";", "").strip()
+        article_id = url.split("/")[-1]
+        data = urllib.urlencode({'itemId': article_id, 'formCheck': form_check})
+        response = self.browser.open(self.ajax_url, data)
         article_json = json.load(response)['article']['article']
-        filename = u'/private/tmp/article_tmp_{0}.html'.format(article_id)
-        tf = tempfile.NamedTemporaryFile(delete=False)
-        tf.write(article_json)
+        with tempfile.NamedTemporaryFile(delete=False) as tf:
+            tf.write(article_json)
         return tf.name
 
     def mark_as_read(self, mark_list):
@@ -193,3 +190,5 @@ class Pocket(BasicNewsRecipe):
         else:
             self.log.exception(error_message)
             raise RuntimeError(error_message)
+
+# vim:ft=python
