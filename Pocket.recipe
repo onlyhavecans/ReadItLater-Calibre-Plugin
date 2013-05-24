@@ -191,4 +191,4 @@ class Pocket(BasicNewsRecipe):
             self.log.exception(error_message)
             raise RuntimeError(error_message)
 
-# vim:ft=python
+# vim:ft=python tabstop=8 expandtab shiftwidth=4 softtabstop=4
