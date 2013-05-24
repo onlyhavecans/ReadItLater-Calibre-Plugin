@@ -9,6 +9,7 @@ import json
 import operator
 import tempfile
 
+
 __license__   = 'GPL v3'
 __copyright__ = '''
 2010, Darko Miletic <darko.miletic at gmail.com>
@@ -35,7 +36,7 @@ class Pocket(BasicNewsRecipe):
     #To filter by tag this needs to be a single tag in quotes; IE 'calibre'
     only_pull_tag         = None
 
-    #You don't want to change anything under here unless you REALLY know what you are doing
+    #You don't want to change anything under
     no_stylesheets        = True
     use_embedded_content  = False
     needs_subscription    = True
@@ -48,11 +49,11 @@ class Pocket(BasicNewsRecipe):
     legacy_login_url      = index_url + u'/l' # We use this to cheat oAuth
     articles              = []
 
-
     def get_browser(self, *args, **kwargs):
         """
-        We need to pretend to be a recent version of safari for the mac to prevent User-Agent checks
-        Pocket api requires username and password so fail loudly if it's missing from the config.
+        We need to pretend to be a recent version of safari for the mac to
+        prevent User-Agent checks Pocket api requires username and password so
+        fail loudly if it's missing from the config.
         """
         br = BasicNewsRecipe.get_browser(self, user_agent='Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; en-us) AppleWebKit/533.19.4 (KHTML, like Gecko) Version/5.0.3 Safari/533.19.4')
         if self.username is not None and self.password is not None:
@@ -62,7 +63,7 @@ class Pocket(BasicNewsRecipe):
             br['password'] = self.password
             br.submit()
         else:
-            self.user_error("This Recipe requires authentication, please configured user & pass")
+            self.user_error("This Recipe requires authentication")
         return br
 
     def get_auth_uri(self):
@@ -70,7 +71,7 @@ class Pocket(BasicNewsRecipe):
         uri = ""
         uri = u'{0}&apikey={1!s}'.format(uri, self.apikey)
         if self.username is None or self.password is None:
-            self.user_error("Username or password is blank. Pocket no longer supports blank passwords")
+            self.user_error("Username or password is blank.")
         else:
             uri = u'{0}&username={1!s}'.format(uri, self.username)
             uri = u'{0}&password={1!s}'.format(uri, self.password)
@@ -84,7 +85,7 @@ class Pocket(BasicNewsRecipe):
         uri = u'{0}&sort={1}'.format(uri, self.sort_method)
         uri = u'{0}&count={1!s}'.format(uri, self.max_articles_per_feed)
         if self.only_pull_tag is not None:
-            uri = u'{0}tag={1}'.format(uri, self.only_pull_tag)
+            uri = u'{0}&tag={1}'.format(uri, self.only_pull_tag)
         return uri
 
     def parse_index(self):
@@ -119,7 +120,6 @@ class Pocket(BasicNewsRecipe):
                 'sort':         pocket_article[1]['sort_id']
             })
         self.articles = sorted(self.articles, key=operator.itemgetter('sort'))
-        print self.articles
         return [("My Pocket Articles for {0}".format(strftime('[%I:%M %p]')), self.articles)]
 
     def get_obfuscated_article(self, url):
