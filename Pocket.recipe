@@ -1,53 +1,54 @@
 """
-Pocket Calibre Recipe v1.3
+Pocket Calibre Recipe v1.3.1
 """
 from calibre import strftime
 from calibre.web.feeds.news import BasicNewsRecipe
-import urllib2
-import urllib
 import json
 import operator
+import re
 import tempfile
+import urllib
+import urllib2
 
 
-__license__   = 'GPL v3'
+__license__ = 'GPL v3'
 __copyright__ = '''
 2010, Darko Miletic <darko.miletic at gmail.com>
 2011, Przemyslaw Kryger <pkryger at gmail.com>
-2012, tBunnyMan <Wag That Tail At Me dot com>
+2012-2013, tBunnyMan <Wag That Tail At Me dot com>
 '''
 
 
 class Pocket(BasicNewsRecipe):
-    title                 = 'Pocket'
-    __author__            = 'Darko Miletic, Przemyslaw Kryger, Keith Callenberg, tBunnyMan'
-    description           = '''Personalized news feeds. Go to getpocket.com to setup up \
-                            your news. This version displays pages of articles from \
-                            oldest to newest, with max & minimum counts, and marks articles \
-                            read after downloading.'''
-    publisher             = 'getpocket.com'
-    category              = 'news, custom'
+    title = 'Pocket'
+    __author__ = 'Darko Miletic, Przemyslaw Kryger, Keith Callenberg, tBunnyMan'
+    description = '''Personalized news feeds. Go to getpocket.com to setup up
+                  your news. This version displays pages of articles from
+                  oldest to newest, with max & minimum counts, and marks
+                  articles read after downloading.'''
+    publisher = 'getpocket.com'
+    category = 'news, custom'
+
+    #Settings people change
     max_articles_per_feed = 50
     minimum_articles      = 10
-    #Set this to False for testing
-    mark_as_read_after_dl = True
-    #MUST be either 'oldest' or 'newest'
-    sort_method           = 'oldest'
-    #To filter by tag this needs to be a single tag in quotes; IE 'calibre'
+    mark_as_read_after_dl = True  # Set this to False for testing
+    sort_method           = 'oldest'  # MUST be either 'oldest' or 'newest'
+    # To filter by tag this needs to be a single tag in quotes; IE 'calibre'
     only_pull_tag         = None
 
     #You don't want to change anything under
-    no_stylesheets        = True
-    use_embedded_content  = False
-    needs_subscription    = True
+    no_stylesheets = True
+    use_embedded_content = False
+    needs_subscription = True
     articles_are_obfuscated = True
-    apikey                = '19eg0e47pbT32z4793Tf021k99Afl889'
-    index_url             = u'http://getpocket.com'
-    ajax_url              = u'http://getpocket.com/a/x/getArticle.php'
-    read_api_url          = index_url + u'/v3/get'
-    modify_api_url        = index_url + u'/v3/send'
-    legacy_login_url      = index_url + u'/l' # We use this to cheat oAuth
-    articles              = []
+    apikey = '19eg0e47pbT32z4793Tf021k99Afl889'
+    index_url = u'http://getpocket.com'
+    ajax_url = u'http://getpocket.com/a/x/getArticle.php'
+    read_api_url = index_url + u'/v3/get'
+    modify_api_url = index_url + u'/v3/send'
+    legacy_login_url = index_url + u'/l'  # We use this to cheat oAuth
+    articles = []
 
     def get_browser(self, *args, **kwargs):
         """
@@ -78,10 +79,9 @@ class Pocket(BasicNewsRecipe):
         return uri
 
     def get_pull_articles_uri(self):
-        """Return the part of the uri that has all of the get request settings"""
         uri = ""
-        uri = u'{0}&state={1}'.format(uri, u'unread') #TODO This could be modded to allow pulling archives
-        uri = u'{0}&contentType={1}'.format(uri, u'article') #TODO This COULD return images too
+        uri = u'{0}&state={1}'.format(uri, u'unread')
+        uri = u'{0}&contentType={1}'.format(uri, u'article')
         uri = u'{0}&sort={1}'.format(uri, self.sort_method)
         uri = u'{0}&count={1!s}'.format(uri, self.max_articles_per_feed)
         if self.only_pull_tag is not None:
@@ -150,7 +150,7 @@ class Pocket(BasicNewsRecipe):
             request = urllib2.Request(mark_read_url)
             response = urllib2.urlopen(request)
         except urllib2.HTTPError as e:
-            self.log.exception('Pocket returned {0.reason} while archiving articles: {0}'.format(e))
+            self.log.exception('Pocket returned an error while archiving articles: {0}'.format(e))
             return []
         except urllib2.URLError as e:
             self.log.exception("Unable to connect to getpocket.com's modify api: {0}".format(e))
@@ -170,7 +170,7 @@ class Pocket(BasicNewsRecipe):
         try:
             from calibre.ebooks import calibre_cover
             title = self.title if isinstance(self.title, unicode) else \
-                    self.title.decode('utf-8', 'replace')
+                self.title.decode('utf-8', 'replace')
             date = strftime(self.timefmt)
             time = strftime('[%I:%M %p]')
             img_data = calibre_cover(title, date, time)
