@@ -13,6 +13,12 @@ If you have suggestions of feature suggestions I will consider them. Please subm
 * Under "Schedule News Download" Select the new Pocket recipe under custom and fill out your credentials
 
 # Changelog
+## Pocket v1.3.1 (The 'I rushed 1.3 because of api changes' bugfix release)
+* Default mark as read again
+* fix mark as read errors
+* fix tag filtering
+* Added h1 titles to articles
+
 ## Pocket v1.3
 * Updated to the new v3 of the API
 * Switched off the old, now broken, text view

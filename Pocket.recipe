@@ -154,7 +154,6 @@ class Pocket(BasicNewsRecipe):
         """
         article = self.get_textview(url)
         template = Template('<h1>$title</h1><div class="body">$body</div>')
-
         with tempfile.NamedTemporaryFile(delete=False) as tf:
             tf.write(template.substitute(
                 title=article['article']['title'],
