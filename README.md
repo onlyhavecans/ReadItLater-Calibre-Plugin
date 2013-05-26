@@ -13,6 +13,9 @@ If you have suggestions of feature suggestions I will consider them. Please subm
 * Under "Schedule News Download" Select the new Pocket recipe under custom and fill out your credentials
 
 # Changelog
+## Pocket v1.4
+* The first photo in an article is now included with the article
+
 ## Pocket v1.3.1 (The 'I rushed 1.3 because of api changes' bugfix release)
 * Default mark as read again
 * fix mark as read errors

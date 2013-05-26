@@ -1,12 +1,12 @@
 """
-Pocket Calibre Recipe v1.3.1
+Pocket Calibre Recipe v1.4
 """
 from calibre import strftime
 from calibre.web.feeds.news import BasicNewsRecipe
+from string import Template
 import json
 import operator
 import re
-from string import Template
 import tempfile
 import urllib
 import urllib2
@@ -145,7 +145,7 @@ class Pocket(BasicNewsRecipe):
         except urllib2.HTTPError as e:
             self.log.exception("unable to get textview {0}".format(e.info()))
             raise e
-        return json.load(response)
+        return json.load(response)['article']
 
     def get_obfuscated_article(self, url):
         """
@@ -153,11 +153,18 @@ class Pocket(BasicNewsRecipe):
         parsed by calibre.
         """
         article = self.get_textview(url)
-        template = Template('<h1>$title</h1><div class="body">$body</div>')
+        template = Template('<h1>$title</h1>\
+                $img\
+                <div class="body">$body</div>')
+        try:
+            image = '<img src="{0}" \>'.format(article['images']['1']['src'])
+        except:
+            image = ''
         with tempfile.NamedTemporaryFile(delete=False) as tf:
-            tf.write(template.substitute(
-                title=article['article']['title'],
-                body=article['article']['article']
+            tf.write(template.safe_substitute(
+                title=article['title'],
+                img=image,
+                body=article['article']
                 ))
         return tf.name
 
