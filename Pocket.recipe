@@ -30,7 +30,7 @@ class Pocket(BasicNewsRecipe):
     max_articles_per_feed = 50
     minimum_articles      = 10
     #Set this to False for testing
-    mark_as_read_after_dl = False
+    mark_as_read_after_dl = True
     #MUST be either 'oldest' or 'newest'
     sort_method           = 'oldest'
     #To filter by tag this needs to be a single tag in quotes; IE 'calibre'
@@ -135,25 +135,22 @@ class Pocket(BasicNewsRecipe):
         return tf.name
 
     def mark_as_read(self, mark_list):
-        formatted_list = []
+        actions_list = []
         for article_id in mark_list:
-            formatted_list.append({
+            actions_list.append({
                 'action': 'archive',
                 'item_id': article_id
             })
-        command = {
-            'actions': formatted_list
-        }
-        mark_read_url = u'{0}?{1}'.format(
+        mark_read_url = u'{0}?actions={1}{2}'.format(
             self.modify_api_url,
+            json.dumps(actions_list, separators=(',', ':')),
             self.get_auth_uri()
         )
         try:
-            request = urllib2.Request(mark_read_url, json.dumps(command))
+            request = urllib2.Request(mark_read_url)
             response = urllib2.urlopen(request)
-            print u'response = {0}'.format(response.info())
         except urllib2.HTTPError as e:
-            self.log.exception('Pocket returned an error while archiving articles: {0}'.format(e))
+            self.log.exception('Pocket returned {0.reason} while archiving articles: {0}'.format(e))
             return []
         except urllib2.URLError as e:
             self.log.exception("Unable to connect to getpocket.com's modify api: {0}".format(e))
@@ -161,7 +158,7 @@ class Pocket(BasicNewsRecipe):
 
     def cleanup(self):
         if self.mark_as_read_after_dl:
-            self.mark_as_read([x[1]['item_id'] for x in self.articles])
+            self.mark_as_read([x['item_id'] for x in self.articles])
         else:
             pass
 
