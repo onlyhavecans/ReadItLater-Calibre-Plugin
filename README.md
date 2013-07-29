@@ -13,6 +13,9 @@ If you have suggestions of feature suggestions I will consider them. Please subm
 * Under "Schedule News Download" Select the new Pocket recipe under custom and fill out your credentials
 
 # Changelog
+## Pocket v1.5
+* Download all images from every article
+
 ## Pocket v1.4
 * The first photo in an article is now included with the article
 
