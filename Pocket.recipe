@@ -17,12 +17,13 @@ __copyright__ = '''
 2010, Darko Miletic <darko.miletic at gmail.com>
 2011, Przemyslaw Kryger <pkryger at gmail.com>
 2012-2013, tBunnyMan <Wag That Tail At Me dot com>
+2013, Stefan Wagner <mail dot bompo at gmail dot com>
 '''
 
 
 class Pocket(BasicNewsRecipe):
     title = 'Pocket'
-    __author__ = 'Darko Miletic, Przemyslaw Kryger, Keith Callenberg, tBunnyMan'
+    __author__ = 'Darko Miletic, Przemyslaw Kryger, Keith Callenberg, tBunnyMan, Stefan Wagner'
     description = '''Personalized news feeds. Go to getpocket.com to setup up
                   your news. This version displays pages of articles from
                   oldest to newest, with max & minimum counts, and marks
@@ -154,16 +155,14 @@ class Pocket(BasicNewsRecipe):
         """
         article = self.get_textview(url)
         template = Template('<h1>$title</h1>\
-                $img\
                 <div class="body">$body</div>')
-        try:
-            image = '<img src="{0}" \>'.format(article['images']['1']['src'])
-        except:
-            image = ''
+        
+        for image in range(len(article['images'])):
+            article['article'] = article['article'].replace("<div id=\"RIL_IMG_" + str(image + 1) + "\" class=\"RIL_IMG\"></div>", "<img src=\"{0}\" \>".format(article['images'][str(image + 1)]['src']))
+        
         with tempfile.NamedTemporaryFile(delete=False) as tf:
             tf.write(template.safe_substitute(
                 title=article['title'],
-                img=image,
                 body=article['article']
                 ))
         return tf.name
