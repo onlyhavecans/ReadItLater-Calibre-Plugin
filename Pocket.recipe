@@ -17,6 +17,7 @@ __copyright__ = '''
 2010, Darko Miletic <darko.miletic at gmail.com>
 2011, Przemyslaw Kryger <pkryger at gmail.com>
 2012-2013, tBunnyMan <Wag That Tail At Me dot com>
+2014, Alejandro Blanco <alejandro.b.e at gmail.com>
 '''
 
 
@@ -49,6 +50,7 @@ class Pocket(BasicNewsRecipe):
     modify_api_url = index_url + u'/v3/send'
     legacy_login_url = index_url + u'/l'  # We use this to cheat oAuth
     articles = []
+    img_regex = re.compile(r'(<div id="RIL_IMG_(\d+)" class="RIL_IMG"></div>)')
 
     def get_browser(self, *args, **kwargs):
         """
@@ -147,24 +149,34 @@ class Pocket(BasicNewsRecipe):
             raise e
         return json.load(response)['article']
 
+    def replace_images(self, article):
+        """
+        Replace the div placeholders by img items
+        """
+        html = article['article']
+        images = article['images']
+        matches = self.img_regex.findall(html)
+        for m in matches:
+            placeholder = m[0]
+            img_id = m[1]
+            image = images.get(img_id, None)
+            if image is not None:
+                new_image = '<img src="%s" />' % image['src']
+                html = html.replace(placeholder, new_image)
+        return html
+
     def get_obfuscated_article(self, url):
         """
         Our get_textview returns parsed json so prettify it to something well
         parsed by calibre.
         """
         article = self.get_textview(url)
-        template = Template('<h1>$title</h1>\
-                $img\
-                <div class="body">$body</div>')
-        try:
-            image = '<img src="{0}" \>'.format(article['images']['1']['src'])
-        except:
-            image = ''
+        body = self.replace_images(article)
+        template = Template('<h1>$title</h1><div class="body">$body</div>')
         with tempfile.NamedTemporaryFile(delete=False) as tf:
             tf.write(template.safe_substitute(
                 title=article['title'],
-                img=image,
-                body=article['article']
+                body=body
                 ))
         return tf.name
 
