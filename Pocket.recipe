@@ -23,7 +23,8 @@ __copyright__ = '''
 
 class Pocket(BasicNewsRecipe):
     title = 'Pocket'
-    __author__ = 'Darko Miletic, Przemyslaw Kryger, Keith Callenberg, tBunnyMan'
+    __author__ = ('Darko Miletic, Przemyslaw Kryger, Keith Callenberg, '
+                  'tBunnyMan, Alejandro Blanco')
     description = '''Personalized news feeds. Go to getpocket.com to setup up
                   your news. This version displays pages of articles from
                   oldest to newest, with max & minimum counts, and marks
