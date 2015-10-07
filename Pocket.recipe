@@ -45,7 +45,7 @@ class Pocket(BasicNewsRecipe):
     needs_subscription = True
     articles_are_obfuscated = True
     apikey = '19eg0e47pbT32z4793Tf021k99Afl889'
-    index_url = u'http://getpocket.com'
+    index_url = u'https://getpocket.com'
     read_api_url = index_url + u'/v3/get'
     modify_api_url = index_url + u'/v3/send'
     legacy_login_url = index_url + u'/l'  # We use this to cheat oAuth
