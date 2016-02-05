@@ -3,9 +3,7 @@ This is a fork of the original 2011 Calibre ReadItLater plugin. I modified the t
 
 Now, you get **The latest** and **the content organized by your tags**:
 
-<img src="doc/02.png" alt="" style="width: 200px;"/>
-
-<img src="doc/03.png" alt="" style="width: 200px;"/>
+<table><tr><td><img src="doc/02.png" alt="" style="width: 200px;"/></td><td><img src="doc/03.png" alt="" style="width: 200px;"/></td></tr></table>
 
 .. before:
 
