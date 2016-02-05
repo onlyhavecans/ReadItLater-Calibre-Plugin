@@ -3,13 +3,13 @@ This is a fork of the original 2011 Calibre ReadItLater plugin. I modified the t
 
 Now, you get **The latest** and **the content organized by your tags**:
 
-![fig2](doc/02.jpg)
+![fig2](doc/02.png)
 
-![fig1](doc/03.jpg)
+![fig1](doc/03.png)
 
 .. before:
 
-![fig1](doc/01.jpg)
+![fig1](doc/01.png)
 
 At the moment you have to define your own tags in the code (variable `self.tags`). It should be changed at some point.
 
@@ -24,6 +24,7 @@ At the moment you have to define your own tags in the code (variable `self.tags`
 # Changelog
 ## Pocket v1.4.1
 * Modified version of the plugin to get (1) The latest (more or less as the original version of the plugin) (2) and your content organized by tags! 
+
 ## Pocket v1.4
 * The first photo in an article is now included with the article
 
