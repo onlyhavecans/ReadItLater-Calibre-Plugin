@@ -5,6 +5,8 @@ Now, you get **The latest** and **the content organized by your tags**:
 
 ![fig2](doc/02.png =300x)
 
+<img src="doc/02.png" alt="" style="width: 200px;"/>
+
 ![fig1](doc/03.png =300x)
 
 .. before:
