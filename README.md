@@ -1,9 +1,20 @@
-# Pocket recipe for Calibre
-This is a fork of the original 2011 Calibre ReadItLater plugin.
+# Pocket+ recipe for Calibre
+This is a fork of the original 2011 Calibre ReadItLater plugin. I modified the the plugin to get (1) The latest (more or less as the original version of the plugin) (2) and your content organized by tags! 
 
-I (@tbunnyman) have not used Pocket since 2013 and therefor am no longer activly developing this. I will check and merge pull requests for bugs and non-distruptive features but if you wan to go crazy I totally encorage forking and sharing.
+Now, you get **The latest** and **the content organized by your tags**:
+
+![fig2](doc/02.jpg)
+
+![fig1](doc/03.jpg)
+
+.. before:
+
+![fig1](doc/01.jpg)
+
+At the moment you have to define your own tags in the code (variable `self.tags`). It should be changed at some point.
 
 # Installation
+
 * Under the "Fetch News" drop down select "Add a Custom Source"
 * Click "Load Recipe From File" and choose the Pocket.recipe file
 * Edit max_articles_per_feed & minimum_articles to set your max and minimum articles downloaded per eBook
@@ -11,6 +22,8 @@ I (@tbunnyman) have not used Pocket since 2013 and therefor am no longer activly
 * Under "Schedule News Download" Select the new Pocket recipe under custom and fill out your credentials
 
 # Changelog
+## Pocket v1.4.1
+* Modified version of the plugin to get (1) The latest (more or less as the original version of the plugin) (2) and your content organized by tags! 
 ## Pocket v1.4
 * The first photo in an article is now included with the article
 
