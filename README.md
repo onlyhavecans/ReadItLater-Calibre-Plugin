@@ -3,15 +3,13 @@ This is a fork of the original 2011 Calibre ReadItLater plugin. I modified the t
 
 Now, you get **The latest** and **the content organized by your tags**:
 
-![fig2](doc/02.png =300x)
-
 <img src="doc/02.png" alt="" style="width: 200px;"/>
 
-![fig1](doc/03.png =300x)
+<img src="doc/03.png" alt="" style="width: 200px;"/>
 
 .. before:
 
-![fig1](doc/01.png =300x)
+<img src="doc/01.png" alt="" style="width: 200px;"/>
 
 At the moment you have to define your own tags in the code (variable `self.tags`). It should be changed at some point.
 
