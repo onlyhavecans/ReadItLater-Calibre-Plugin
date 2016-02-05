@@ -1,5 +1,15 @@
 # Pocket+ recipe for Calibre
-This is a fork of the original 2011 Calibre ReadItLater plugin. I modified the the plugin to get (1) The latest (more or less as the original version of the plugin) (2) and your content organized by tags! 
+
+[Pocket](https://getpocket.com/), previously known as Read It Later, is an application and service for managing a reading list of articles from the Internet. The application allows the user to save an article or web page to the cloud for later reading. The article is then sent to the user's Pocket list (synced to all of their devices) for offline reading. Pocket removes clutter from articles and allows the user to adjust text settings for easier reading [Source](https://en.wikipedia.org/wiki/Pocket_%28application%29).
+
+[Calibre](http://calibre-ebook.com/) is a free and open source e-book library management application developed by users of e-books for users of e-books. The programs also allows users to create own e-books and syncing with a variaty of e-book readers (e.g. Kindle, that's how I got the screenshots below) [Source](https://en.wikipedia.org/wiki/Calibre_%28software%29). Calibre has a plugin management system and ..
+
+**This plugin allows users to get their Pocket-ed articles with Calibre and send them as an e-book to their prefered e-book reader. You can schedule this process and every day get the freshest e-book with your Pocket-ed articles!**
+
+THis is a fork of the origina plugin. I modified the plugin to get an e-book including:
+
+* The latest (more or less as the original version of the plugin)
+* your content organized by tags!
 
 Now, you get **The latest** and **the content organized by your tags**:
 
@@ -11,13 +21,17 @@ Now, you get **The latest** and **the content organized by your tags**:
 
 At the moment you have to define your own tags in the code (variable `self.tags`). It should be changed at some point.
 
+This is a fork of the original 2011 Calibre ReadItLater plugin.
+
 # Installation
 
 * Under the "Fetch News" drop down select "Add a Custom Source"
 * Click "Load Recipe From File" and choose the Pocket.recipe file
 * Edit max_articles_per_feed & minimum_articles to set your max and minimum articles downloaded per eBook
 * Save and Close
-* Under "Schedule News Download" Select the new Pocket recipe under custom and fill out your credentials
+* Under "Schedule News Download" Select the new Pocket recipe under custom and fill out your credential
+
+If you have any problem read more [at Pocket](https://help.getpocket.com/customer/portal/articles/361724-how-to-configure-calibre-with-pocket)
 
 # Changelog
 ## Pocket v1.4.1
