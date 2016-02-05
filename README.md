@@ -6,12 +6,14 @@
 
 **This plugin allows users to get their Pocket-ed articles with Calibre and send them as an e-book to their prefered e-book reader. You can schedule this process and every day get the freshest e-book with your Pocket-ed articles!**
 
-THis is a fork of the origina plugin. I modified the plugin to get an e-book including:
+This is a fork of the original plugin.
+
+I modified the plugin to get an e-book including:
 
 * The latest (more or less as the original version of the plugin)
 * your content organized by tags!
 
-Now, you get **The latest** and **the content organized by your tags**:
+Now, you get **The latest** and **The content organized by your tags**:
 
 <table><tr><td><img src="doc/02.png" alt="" style="width: 200px;"/></td><td><img src="doc/03.png" alt="" style="width: 200px;"/></td></tr></table>
 
