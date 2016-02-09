@@ -125,10 +125,10 @@ class Pocket(BasicNewsRecipe):
                 return []
 
             if len(pocket_feed) < self.minimum_articles:  # for pocket_feed
-                self.mark_as_read_after_dl = False
-                self.user_error("Only {0} articles retrieved, minimum_articles not reached".format(len(pocket_feed)))
-
-            for pocket_article in pocket_feed.iteritems():
+                #self.mark_as_read_after_dl = False
+                self.log.exception("Tag has no articles: {0}".format(tag))
+            else:
+              for pocket_article in pocket_feed.iteritems():
                 
                 self.articles.append({
                     'item_id':      pocket_article[0],
@@ -139,10 +139,10 @@ class Pocket(BasicNewsRecipe):
                     'description':  pocket_article[1]['excerpt'],
                     'sort':         pocket_article[1]['sort_id'],
                 })
-            if tag == '':
+              if tag == '':
                 tag = "The latest"
-            self.articles = sorted(self.articles, key=operator.itemgetter('sort'))
-            articles_tags.append([tag, self.articles])
+              self.articles = sorted(self.articles, key=operator.itemgetter('sort'))
+              articles_tags.append([tag, self.articles])
         return articles_tags
     
     def get_textview(self, url):
