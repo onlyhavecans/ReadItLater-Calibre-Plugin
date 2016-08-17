@@ -173,6 +173,7 @@ class Pocket(BasicNewsRecipe):
         """
         article = self.get_textview(url)
         template = Template('<h2>$title</h2>\
+                <small><a href="$link">$link</a></small>\
                 $img\
                 <div class="body">$body</div>')
         try:
@@ -182,6 +183,7 @@ class Pocket(BasicNewsRecipe):
         with tempfile.NamedTemporaryFile(delete=False) as tf:
             tf.write(template.safe_substitute(
                 title=article['title'],
+                link=article['resolvedUrl'],
                 img=image,
                 body=article['article'],
                 ))
