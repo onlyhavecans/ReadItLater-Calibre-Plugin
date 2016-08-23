@@ -36,6 +36,10 @@ This is a fork of the original 2011 Calibre ReadItLater plugin.
 If you have any problem read more [at Pocket](https://help.getpocket.com/customer/portal/articles/361724-how-to-configure-calibre-with-pocket)
 
 # Changelog
+
+## Pocket v1.4.2
+* Add links to articles.
+
 ## Pocket v1.4.1
 * Modified version of the plugin to get (1) The latest (more or less as the original version of the plugin) (2) and your content organized by tags! 
 
