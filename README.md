@@ -40,7 +40,7 @@ If you have any problem read more [at Pocket](https://help.getpocket.com/custome
 ## Pocket v1.4.2
 * Add links to articles.
 
-<img src="doc/screenshot_2016_08_29T20_43_53_0200.png" alt="" style="width: 200px;"/>
+<img src="doc/screenshot_2016_08_29T20_43_53_0200.png" alt="" style="width:100px;"/>
 
 ## Pocket v1.4.1
 * Modified version of the plugin to get (1) The latest (more or less as the original version of the plugin) (2) and your content organized by tags! 
