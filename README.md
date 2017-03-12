@@ -6,6 +6,8 @@
 
 **This plugin allows users to get their Pocket-ed articles with Calibre and send them as an e-book to their prefered e-book reader. You can schedule this process and every day get the freshest e-book with your Pocket-ed articles!**
 
+Follow the discussion at https://www.mobileread.com/forums/showthread.php?t=270602
+
 This is a fork of the original plugin.
 
 I modified the plugin to get an e-book including:
