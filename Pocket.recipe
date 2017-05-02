@@ -38,9 +38,7 @@ class Pocket(BasicNewsRecipe):
                   oldest to newest, with max & minimum counts, and marks
                   articles read after downloading.
     
-                  Modified version of the plugin to get (1) The latest (more or less as the original version of the plugin) (2) and your content organized by tags! See for more https://github.com/m4rx9/ReadItLater-Calibre-Plugin
-
-'''
+                  Modified version of the plugin to get (1) The latest (more or less as the original version of the plugin) (2) and your content organized by tags! See for more https://github.com/mmagnus/Pocket-Plus-Calibre-Plugin'''
     publisher = 'getpocket.com'
     category = 'news, custom'
 
