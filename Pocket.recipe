@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 """
-Pocket Calibre Recipe v1.4.1
+Pocket Calibre Recipe v1.4.2
 """
 from calibre import strftime
 from calibre.web.feeds.news import BasicNewsRecipe

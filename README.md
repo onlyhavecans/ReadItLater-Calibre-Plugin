@@ -6,6 +6,8 @@
 
 **This plugin allows users to get their Pocket-ed articles with Calibre and send them as an e-book to their prefered e-book reader. You can schedule this process and every day get the freshest e-book with your Pocket-ed articles!**
 
+Follow the discussion at https://www.mobileread.com/forums/showthread.php?t=270602
+
 This is a fork of the original plugin.
 
 I modified the plugin to get an e-book including:
@@ -36,8 +38,12 @@ This is a fork of the original 2011 Calibre ReadItLater plugin.
 If you have any problem read more [at Pocket](https://help.getpocket.com/customer/portal/articles/361724-how-to-configure-calibre-with-pocket)
 
 # Changelog
+## Pocket v1.4.2
 
-- 170502 `Pocket + [Mon, 05 Dec 2016]`
+* 170502 `Pocket + [Mon, 05 Dec 2016]`
+* Add links to articles.
+
+<img src="doc/screenshot_2016_08_29T20_43_53_0200.png" alt="" style="width:100px;"/>
 
 ## Pocket v1.4.1
 * Modified version of the plugin to get (1) The latest (more or less as the original version of the plugin) (2) and your content organized by tags! 
