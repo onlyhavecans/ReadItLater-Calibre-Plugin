@@ -19,7 +19,7 @@ __copyright__ = '''
 2010, Darko Miletic <darko.miletic at gmail.com>
 2011, Przemyslaw Kryger <pkryger at gmail.com>
 2012-2013, tBunnyMan <Wag That Tail At Me dot com>
-2015 Marcin Magnus <mag_dex at o2 pl>
+2015-2017 Marcin Magnus <mag_dex at o2 pl>
 '''
 
 def get_date():
