@@ -22,6 +22,14 @@ __copyright__ = '''
 2015 Marcin Magnus <mag_dex at o2 pl>
 '''
 
+def get_date():
+    import datetime
+    format = "%a, %d %b %Y"
+    today = datetime.datetime.today()
+    s = today.strftime(format)
+    d = datetime.datetime.strptime(s, format)
+    return d.strftime(format)
+
 class Pocket(BasicNewsRecipe):
     title = 'Pocket+'
     __author__ = 'Darko Miletic, Przemyslaw Kryger, Keith Callenberg, tBunnyMan, Marcin Magnus'
@@ -41,6 +49,7 @@ class Pocket(BasicNewsRecipe):
     minimum_articles      = 1
     mark_as_read_after_dl = True  # Set this to False for testing
     sort_method           = 'newest'  # MUST be either 'oldest' or 'newest'
+    title_with_date       = True # if True Pocket+ [Tue, 02 May 2017]
     # To filter by tag this needs to be a single tag in quotes; IE 'calibre'
     only_pull_tag         = None
     tags =  ['','phylosophy', 'cas9', 'dnazyme', 'rna', 'lncrna', 'db', 'osx', 'kindle'] # define your own tags, '' gives "The latest"!
@@ -81,6 +90,8 @@ class Pocket(BasicNewsRecipe):
 
     def get_auth_uri(self):
         """Quick function to return the authentication part of the url"""
+        if self.title_with_date:
+            self.title = 'Pocket+ [' + get_date() + ']'
         uri = ""
         uri = u'{0}&apikey={1!s}'.format(uri, self.apikey)
         if self.username is None or self.password is None:
