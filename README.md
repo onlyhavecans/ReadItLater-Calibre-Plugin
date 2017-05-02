@@ -3,6 +3,8 @@ This is a fork of the original 2011 Calibre ReadItLater plugin.
 
 I (@tbunnyman) have not used Pocket since 2013 and therefor am no longer activly developing this. I will check and merge pull requests for bugs and non-distruptive features but if you wan to go crazy I totally encorage forking and sharing.
 
+ If you want to get an update version of this repo visit https://github.com/mmagnus/Pocket-Plus-Calibre-Plugin .
+
 # Installation
 * Under the "Fetch News" drop down select "Add a Custom Source"
 * Click "Load Recipe From File" and choose the Pocket.recipe file
