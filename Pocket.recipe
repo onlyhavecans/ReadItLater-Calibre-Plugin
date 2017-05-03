@@ -184,7 +184,8 @@ class Pocket(BasicNewsRecipe):
         """
         article = self.get_textview(url)
 
-        template = Template('<h1>$title</h1>\
+        template = Template('<h2>$title</h2>\
+                <small><a href="$link">$link</a></small>\
                 <div class="body">$body</div>')
         
         for image in range(len(article['images'])):
