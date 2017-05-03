@@ -4,12 +4,13 @@
 
 ![](doc/starit.png)
 
+
 Table of Contents
 =================
 
+  * [Settings](#settings)
   * [Installation](#installation)
   * [Changelog](#changelog)
-    * [Current](#current)
 
 [Pocket](https://getpocket.com/), previously known as Read It Later, is an application and service for managing a reading list of articles from the Internet. The application allows the user to save an article or web page to the cloud for later reading. The article is then sent to the user's Pocket list (synced to all of their devices) for offline reading. Pocket removes clutter from articles and allows the user to adjust text settings for easier reading [Source](https://en.wikipedia.org/wiki/Pocket_%28application%29).
 
@@ -38,6 +39,15 @@ Now, you get **The latest** and **The content organized by your tags**:
 At the moment you have to define your own tags in the code (variable `self.tags`). It should be changed at some point.
 
 This is a fork of the original 2011 Calibre ReadItLater plugin.
+
+# Settings
+To change settings, click on:
+
+	Fetch news -> Add custom news source -> Pocket+ (Edit this recipe)
+
+and edit the Python code.
+
+![](doc/settings.png)
 
 # Installation
 
@@ -96,3 +106,10 @@ If you have any problem read more [at Pocket](https://help.getpocket.com/custome
 * Marks downloaded articles read with option at the top to disable
 * Shows timestamp on the cover under the date
 
+# Development
+Links on development of recipes:
+
+* https://manual.calibre-ebook.com/news.html
+* https://manual.calibre-ebook.com/news_recipe.html
+
+The default Calibre plugin is here https://github.com/kovidgoyal/calibre/blob/master/recipes/readitlater.recipe
