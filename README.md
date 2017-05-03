@@ -41,6 +41,24 @@ At the moment you have to define your own tags in the code (variable `self.tags`
 This is a fork of the original 2011 Calibre ReadItLater plugin.
 
 # Settings
+
+```python
+    # Settings people change ------------------------------------------------------
+    max_articles_per_feed = 20
+    minimum_articles      = 1
+    mark_as_read_after_dl = False  # Set this to False for testing
+    sort_method           = 'newest'  # MUST be either 'oldest' or 'newest'
+    title_with_date       = True # if True Pocket+ [Tue, 02 May 2017]
+    to_pull               = 'all' #'unread' # or 'unread' What articles to pull? unread only or all?
+    compress_news_images  = False # True gives compressed images
+
+    # '' gives "The latest"! e.g. ['','iphone'] to get The latest and articles tagged with `iphone`
+    # [''] to get only The latest
+    tags = ['', 'iphone']
+
+    # Settings end -----------------------------------------------------------------
+```
+
 To change settings, click on:
 
 	Fetch news -> Add custom news source -> Pocket+ (Edit this recipe)
