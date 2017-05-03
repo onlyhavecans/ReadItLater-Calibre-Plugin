@@ -48,6 +48,7 @@ class Pocket(BasicNewsRecipe):
     mark_as_read_after_dl = True  # Set this to False for testing
     sort_method           = 'newest'  # MUST be either 'oldest' or 'newest'
     title_with_date       = True # if True Pocket+ [Tue, 02 May 2017]
+    to_pull               = 'unread' # or 'unread' What articles to pull? unread only or all?
     # To filter by tag this needs to be a single tag in quotes; IE 'calibre'
     only_pull_tag         = None
     tags =  ['','phylosophy', 'cas9', 'dnazyme', 'rna', 'lncrna', 'db', 'osx', 'kindle'] # define your own tags, '' gives "The latest"!
@@ -103,7 +104,7 @@ class Pocket(BasicNewsRecipe):
         """Get articles based on tag.
         """
         uri = ""
-        uri = u'{0}&state={1}'.format(uri, u'all')#unread')
+        uri = u'{0}&state={1}'.format(uri, self.to_pull)        
         uri = u'{0}&contentType={1}'.format(uri, u'article')
         uri = u'{0}&sort={1}'.format(uri, self.sort_method)
         uri = u'{0}&tag={1}'.format(uri, tag)

@@ -52,6 +52,7 @@ If you have any problem read more [at Pocket](https://help.getpocket.com/custome
 # Changelog
 ## Current
 
+* 170503 Decide what to pull (all vs unread)
 * 170502 `Pocket + [Mon, 05 Dec 2016]`
 * 160817 Add links to articles.
 
