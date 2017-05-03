@@ -3,6 +3,13 @@
 **Please "Star it", if you like it, so it would be easier to find it for others and to make me happy that the script useful not only for me.**
 ![](doc/starit.png)
 
+Table of Contents
+=================
+
+  * [Installation](#installation)
+  * [Changelog](#changelog)
+    * [Current](#current)
+
 [Pocket](https://getpocket.com/), previously known as Read It Later, is an application and service for managing a reading list of articles from the Internet. The application allows the user to save an article or web page to the cloud for later reading. The article is then sent to the user's Pocket list (synced to all of their devices) for offline reading. Pocket removes clutter from articles and allows the user to adjust text settings for easier reading [Source](https://en.wikipedia.org/wiki/Pocket_%28application%29).
 
 [Calibre](http://calibre-ebook.com/) is a free and open source e-book library management application developed by users of e-books for users of e-books. The programs also allows users to create own e-books and syncing with a variaty of e-book readers (e.g. Kindle, that's how I got the screenshots below) [Source](https://en.wikipedia.org/wiki/Calibre_%28software%29). Calibre has a plugin management system and ..
@@ -10,6 +17,7 @@
 **This plugin allows users to get their Pocket-ed articles with Calibre and send them as an e-book to their prefered e-book reader. You can schedule this process and every day get the freshest e-book with your Pocket-ed articles!**
 
 Follow the discussion at https://www.mobileread.com/forums/showthread.php?t=270602
+
 
 This is a fork of the original plugin.
 
@@ -41,15 +49,14 @@ This is a fork of the original 2011 Calibre ReadItLater plugin.
 If you have any problem read more [at Pocket](https://help.getpocket.com/customer/portal/articles/361724-how-to-configure-calibre-with-pocket)
 
 # Changelog
-## Pocket v1.4.2
+## Current
 
 * 170502 `Pocket + [Mon, 05 Dec 2016]`
-* Add links to articles.
+* 160817 Add links to articles.
 
 <img src="doc/screenshot_2016_08_29T20_43_53_0200.png" alt="" style="width:100px;"/>
 
-## Pocket v1.4.1
-* Modified version of the plugin to get (1) The latest (more or less as the original version of the plugin) (2) and your content organized by tags! 
+* 160205 Modified version of the plugin to get (1) The latest (more or less as the original version of the plugin) (2) and your content organized by tags! 
 
 ## Pocket v1.4
 * The first photo in an article is now included with the article
@@ -87,5 +94,3 @@ If you have any problem read more [at Pocket](https://help.getpocket.com/custome
 * Marks downloaded articles read with option at the top to disable
 * Shows timestamp on the cover under the date
 
-# Notes
-I have removed the Official/Original code I was posting here, since this fork has been merged into the official codebase, please reference the [official code repository](http://bazaar.launchpad.net/~kovid/calibre/trunk/files/head:/recipes/) for the source.
