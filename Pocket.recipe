@@ -40,20 +40,23 @@ class Pocket(BasicNewsRecipe):
                   articles read after downloading.
     
                   Modified version of the plugin to get (1) The latest (more or less as the original version of the plugin) (2) and your content organized by tags! See for more https://github.com/mmagnus/Pocket-Plus-Calibre-Plugin'''
+
     publisher = 'getpocket.com'
     category = 'news, custom'
 
-    # Settings people change
-    max_articles_per_feed = 30
+    # Settings people change ------------------------------------------------------
+    max_articles_per_feed = 10
     minimum_articles      = 1
-    mark_as_read_after_dl = True  # Set this to False for testing
+    mark_as_read_after_dl = False  # Set this to False for testing
     sort_method           = 'newest'  # MUST be either 'oldest' or 'newest'
     title_with_date       = True # if True Pocket+ [Tue, 02 May 2017]
-    to_pull               = 'unread' # or 'unread' What articles to pull? unread only or all?
-    # To filter by tag this needs to be a single tag in quotes; IE 'calibre'
-    only_pull_tag         = None
-    tags =  ['','phylosophy', 'cas9', 'dnazyme', 'rna', 'lncrna', 'db', 'osx', 'kindle'] # define your own tags, '' gives "The latest"!
-    
+    to_pull               = 'all' #'unread' # or 'unread' What articles to pull? unread only or all?
+    compress_news_images  = False # True gives compressed images
+    # '' gives "The latest"! e.g. ['','iphone'] to get The latest and articles tagged with `iphone`
+    # [''] to get only The latest
+    tags = ['']#
+    # Settings end -----------------------------------------------------------------
+
     # You don't want to change anything under
     no_stylesheets = True
     use_embedded_content = False
@@ -67,7 +70,10 @@ class Pocket(BasicNewsRecipe):
     articles = []
 
     encoding = 'utf8'
-    
+
+    # To filter by tag this needs to be a single tag in quotes; IE 'calibre'
+    only_pull_tag         = None
+
     def get_browser(self, *args, **kwargs):
         """
         We need to pretend to be a recent version of safari for the mac to
