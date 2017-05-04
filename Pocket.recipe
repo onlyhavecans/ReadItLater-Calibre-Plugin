@@ -45,7 +45,7 @@ class Pocket(BasicNewsRecipe):
     category = 'news, custom'
 
     # Settings people change ------------------------------------------------------
-    max_articles_per_feed = 10
+    max_articles_per_feed = 30
     minimum_articles      = 1
     mark_as_read_after_dl = False  # Set this to False for testing
     sort_method           = 'newest'  # MUST be either 'oldest' or 'newest'
