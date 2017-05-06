@@ -2,7 +2,7 @@
 
 **Please "Star it", if you like it, so it would be easier to find it for others and to make me happy that the script useful not only for me.**
 
-<img style="width:300px" src="doc/starit.png">
+<img style="width:150px" src="doc/starit.png">
 
 If you like the project 😊
 
