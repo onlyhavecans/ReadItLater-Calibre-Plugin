@@ -2,11 +2,11 @@
 
 **Please "Star it", if you like it, so it would be easier to find it for others and to make me happy that the script useful not only for me.**
 
-![](doc/starit.png)
+<img style="width:300px" src="doc/starit.png">
 
+If you like the project 😊
 
-Table of Contents
-=================
+<span class="badge-paypal"><a href="https://www.paypal.me/MarcinMagnus" title="Donate to this project using Paypal"><img src="https://img.shields.io/badge/paypal-donate-yellow.svg" alt="PayPal donate button" /></a></span> 
 
   * [Settings](#settings)
   * [Installation](#installation)
