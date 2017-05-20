@@ -1,6 +1,6 @@
-# Pocket+ recipe for Calibre
-
-<p align="center">
+<h1 align="center">
+Pocket+ recipe for Calibre
+</h1>
 <b>Please "Star it" if you like it, so it would be easier to find it for others and to make me happy that the script useful not only for me. Or/and donate 😊</b></br>
 <img width=300px src="doc/starit.png"></br>
 <span class="badge-paypal"><a href="https://www.paypal.me/MarcinMagnus" title="Donate to this project using Paypal"><img src="https://img.shields.io/badge/paypal-donate-yellow.svg" alt="PayPal donate button" /></a></span> 
