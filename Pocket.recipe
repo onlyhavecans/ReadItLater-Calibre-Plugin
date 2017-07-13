@@ -1,5 +1,4 @@
 #!/usr/bin/python
-
 """
 Pocket Calibre Recipe v1.4.2
 """
@@ -45,23 +44,37 @@ class Pocket(BasicNewsRecipe):
     category = 'news, custom'
 
     # Settings people change ------------------------------------------------------
-    max_articles_per_feed = 30
+    max_articles_per_feed = 1
     minimum_articles      = 1
-    mark_as_read_after_dl = False  # Set this to False for testing
+    mark_as_read_after_dl = True  # Set this to False for testing
     sort_method           = 'newest'  # MUST be either 'oldest' or 'newest'
     title_with_date       = True # if True Pocket+ [Tue, 02 May 2017]
     to_pull               = 'all' #'unread' # or 'unread' What articles to pull? unread only or all?
     compress_news_images  = False # True gives compressed images
     # '' gives "The latest"! e.g. ['','iphone'] to get The latest and articles tagged with `iphone`
     # [''] to get only The latest
-    tags = ['']#
+    #tags_from_file = [f.strip() for f in open('/home/magnus/Desktop/tags.txtr').readlines()]
+    tags = ['']#, 'music', 'apple', 'iphone', 'osx'] #+ tags_from_file
+                
     # Settings end -----------------------------------------------------------------
 
     # You don't want to change anything under
     no_stylesheets = True
     use_embedded_content = False
     needs_subscription = True
+    #: Set to True and implement :meth:`get_obfuscated_article` to handle
+    #: websites that try to make it difficult to scrape content.
+    # If you set `articles_are_obfuscated` this method is called with
+    #    every article URL. It should return the path to a file on the filesystem
+    #    that contains the article HTML. That file is processed by the recursive
+    #    HTML fetching engine, so it can contain links to pages/images on the web.
+    #
+    #    This method is typically useful for sites that try to make it difficult to
+    #    access article content automatically.
+    # <https://manual.calibre-ebook.com/_modules/calibre/web/feeds/news.html>
+    # e.g. https://searchcode.com/codesearch/view/18433702/
     articles_are_obfuscated = True
+
     apikey = '19eg0e47pbT32z4793Tf021k99Afl889'
     index_url = u'https://getpocket.com'
     read_api_url = index_url + u'/v3/get'
