@@ -92,6 +92,7 @@ class Pocket(BasicNewsRecipe):
             br.submit()
         else:
             self.user_error("This Recipe requires authentication")
+        print('br:' ,br)
         return br
 
     def get_auth_uri(self):
@@ -169,18 +170,49 @@ class Pocket(BasicNewsRecipe):
          We need to pull the article, retrieve the formcheck id, then use it
          to querty for the json version
         This function will break when pocket hates us
+
+	<input type="hidden" class="field-form-route" name="route" value="" />
+	<input type="hidden" class="field-form-check" name="form_check" value="d524abc2d97e20849d98eff0454e0eae853949b0a79933c984eb5bf53c403203" />
+	<input type="hidden" class="field-form-src" name="src" value="" />
+
         """
         ajax_url = self.index_url + u'/a/x/getArticle.php'
-        soup = self.index_to_soup(url)
-        fc_tag = soup.find('script', text=re.compile("formCheck"))
-        fc_id = re.search(r"formCheck = \'([\d\w]+)\';", fc_tag).group(1)
+        soup = self.index_to_soup(url) # html text 
+        print soup
+        match = re.search('form_check" value="(?P<form_check>.*)"', str(soup))
+        if match:
+            fc_id = match.group('form_check')
+        print 'fc_id', fc_id
         article_id = url.split("/")[-1]
-        data = urllib.urlencode({'itemId': article_id, 'formCheck': fc_id})
-        try:
-            response = self.browser.open(ajax_url, data)
-        except urllib2.HTTPError as e:
-            self.log.exception("unable to get textview {0}".format(e.info()))
-            raise e
+        print('ai', article_id)
+        data = urllib.urlencode({'itemId': article_id, 'form_check': fc_id})
+        print('data', data)
+        #try:
+        print(ajax_url)
+        print(data)
+        response = self.browser.open(ajax_url, data)
+        #except urllib2.HTTPError as e:
+        #    self.log.exception("unable to get textview {0}".format(e.info()))
+        #    raise e
+        import sys
+        # to load pages
+        sys.path.append('/home/magnus/work/opt/miniconda2/lib/python2.7/site-packages')
+        import requests
+        #import ipdb; ipdb.set_trace() # this worked :-)
+        r = requests.get(ajax_url, params=data)
+
+        from httplib2 import Http
+        from urllib import urlencode
+        h = Http()
+        #>>> data = dict(name="Joe", comment="A test comment")
+        resp, content = h.request(ajax_url, "POST", data)
+        print resp
+        print content
+        print r
+        print r.text.read()
+        print r.status_code
+        print response
+        print json.load(response)#['article']
         return json.load(response)['article']
 
     def get_obfuscated_article(self, url):

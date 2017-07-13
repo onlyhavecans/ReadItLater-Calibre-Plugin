@@ -1,4 +1,6 @@
-# Pocket+ recipe for Calibre
+># Pocket+ recipe for Calibre
+
+**!!!!!!! the plugin is broken right now, we're trying to fix it (#9) !!!!!!!!**
 
 **Please "Star it" if you like it, so it would be easier to find it for others and to make me happy that the script useful not only for me. Or/and donate 😊**
 
@@ -101,3 +103,5 @@ Links on development of recipes:
 * https://manual.calibre-ebook.com/news_recipe.html
 
 The default Calibre plugin is here https://github.com/kovidgoyal/calibre/blob/master/recipes/readitlater.recipe
+
+`calibre-debug --paths --gui-debug ~/Library/Preferences/calibre/custom_recipes/Pocket__1004.recipe`
