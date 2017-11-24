@@ -37,7 +37,7 @@ class Pocket(BasicNewsRecipe):
                   your news. This version displays pages of articles from
                   oldest to newest, with max & minimum counts, and marks
                   articles read after downloading.
-    
+
                   Modified version of the plugin to get (1) The latest (more or less as the original version of the plugin) (2) and your content organized by tags! See for more https://github.com/mmagnus/Pocket-Plus-Calibre-Plugin'''
 
     publisher = 'getpocket.com'
@@ -55,7 +55,7 @@ class Pocket(BasicNewsRecipe):
     # [''] to get only The latest
     #tags_from_file = [f.strip() for f in open('/home/magnus/Desktop/tags.txtr').readlines()]
     tags = ['']#, 'music', 'apple', 'iphone', 'osx'] #+ tags_from_file
-                
+
     # Settings end -----------------------------------------------------------------
 
     # You don't want to change anything under
@@ -73,7 +73,7 @@ class Pocket(BasicNewsRecipe):
     #    access article content automatically.
     # <https://manual.calibre-ebook.com/_modules/calibre/web/feeds/news.html>
     # e.g. https://searchcode.com/codesearch/view/18433702/
-    articles_are_obfuscated = True
+    articles_are_obfuscated = False
 
     apikey = '19eg0e47pbT32z4793Tf021k99Afl889'
     index_url = u'https://getpocket.com'
@@ -125,7 +125,7 @@ class Pocket(BasicNewsRecipe):
         """Get articles based on tag.
         """
         uri = ""
-        uri = u'{0}&state={1}'.format(uri, self.to_pull)        
+        uri = u'{0}&state={1}'.format(uri, self.to_pull)
         uri = u'{0}&contentType={1}'.format(uri, u'article')
         uri = u'{0}&sort={1}'.format(uri, self.sort_method)
         uri = u'{0}&tag={1}'.format(uri, tag)
@@ -160,7 +160,7 @@ class Pocket(BasicNewsRecipe):
                 self.log.exception("Tag has no articles: {0}".format(tag))
             else:
               for pocket_article in pocket_feed.iteritems():
-                
+
                 self.articles.append({
                     'item_id':      pocket_article[0],
                     'title':        pocket_article[1]['resolved_title'],
@@ -175,7 +175,7 @@ class Pocket(BasicNewsRecipe):
               self.articles = sorted(self.articles, key=operator.itemgetter('sort'))
               articles_tags.append([tag, self.articles])
         return articles_tags
-    
+
     def get_textview(self, url):
         """
         Since Pocket's v3 API they removed access to textview. They also
@@ -190,7 +190,7 @@ class Pocket(BasicNewsRecipe):
 
         """
         ajax_url = self.index_url + u'/a/x/getArticle.php'
-        soup = self.index_to_soup(url) # html text 
+        soup = self.index_to_soup(url) # html text
         print soup
         match = re.search('form_check" value="(?P<form_check>.*)"', str(soup))
         if match:
@@ -238,10 +238,10 @@ class Pocket(BasicNewsRecipe):
         template = Template('<h2>$title</h2>\
                 <small><a href="$link">$link</a></small>\
                 <div class="body">$body</div>')
-        
+
         for image in range(len(article['images'])):
             article['article'] = article['article'].replace("<div id=\"RIL_IMG_" + str(image + 1) + "\" class=\"RIL_IMG\"></div>", "<img src=\"{0}\" \>".format(article['images'][str(image + 1)]['src']))
-        
+
         with tempfile.NamedTemporaryFile(delete=False) as tf:
             tf.write(template.safe_substitute(
                 title=article['title'],
@@ -304,5 +304,3 @@ class Pocket(BasicNewsRecipe):
         else:
             self.log.exception(error_message)
             raise RuntimeError(error_message)
-
-# vim:ft=python tabstop=8 expandtab shiftwidth=4 softtabstop=4
