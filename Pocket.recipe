@@ -1,5 +1,6 @@
+#!/usr/bin/python
 """
-Pocket Calibre Recipe v1.4
+Pocket Calibre Recipe v1.4.2
 """
 from calibre import strftime
 from calibre.web.feeds.news import BasicNewsRecipe
@@ -17,39 +18,74 @@ __copyright__ = '''
 2010, Darko Miletic <darko.miletic at gmail.com>
 2011, Przemyslaw Kryger <pkryger at gmail.com>
 2012-2013, tBunnyMan <Wag That Tail At Me dot com>
+2013 Stefan Wagner <mail dot bompo at gmail dot com>
+2015-2017 Marcin Magnus <mag_dex at o2 pl>
 '''
 
+def get_date():
+    import datetime
+    format = "%a, %d %b %Y"
+    today = datetime.datetime.today()
+    s = today.strftime(format)
+    d = datetime.datetime.strptime(s, format)
+    return d.strftime(format)
 
 class Pocket(BasicNewsRecipe):
-    title = 'Pocket'
-    __author__ = 'Darko Miletic, Przemyslaw Kryger, Keith Callenberg, tBunnyMan'
+    title = 'Pocket+'
+    __author__ = 'Darko Miletic, Przemyslaw Kryger, Keith Callenberg, tBunnyMan, Stefan Wagner, Marcin Magnus'
     description = '''Personalized news feeds. Go to getpocket.com to setup up
                   your news. This version displays pages of articles from
                   oldest to newest, with max & minimum counts, and marks
-                  articles read after downloading.'''
+                  articles read after downloading.
+
+                  Modified version of the plugin to get (1) The latest (more or less as the original version of the plugin) (2) and your content organized by tags! See for more https://github.com/mmagnus/Pocket-Plus-Calibre-Plugin'''
+
     publisher = 'getpocket.com'
     category = 'news, custom'
 
-    #Settings people change
-    oldest_article        = 7.0
-    max_articles_per_feed = 50
-    minimum_articles      = 10
+    # Settings people change ------------------------------------------------------
+    max_articles_per_feed = 1
+    minimum_articles      = 1
     mark_as_read_after_dl = True  # Set this to False for testing
-    sort_method           = 'oldest'  # MUST be either 'oldest' or 'newest'
-    # To filter by tag this needs to be a single tag in quotes; IE 'calibre'
-    only_pull_tag         = None
+    sort_method           = 'newest'  # MUST be either 'oldest' or 'newest'
+    title_with_date       = True # if True Pocket+ [Tue, 02 May 2017]
+    to_pull               = 'all' #'unread' # or 'unread' What articles to pull? unread only or all?
+    compress_news_images  = False # True gives compressed images
+    # '' gives "The latest"! e.g. ['','iphone'] to get The latest and articles tagged with `iphone`
+    # [''] to get only The latest
+    #tags_from_file = [f.strip() for f in open('/home/magnus/Desktop/tags.txtr').readlines()]
+    tags = ['']#, 'music', 'apple', 'iphone', 'osx'] #+ tags_from_file
 
-    #You don't want to change anything under
+    # Settings end -----------------------------------------------------------------
+
+    # You don't want to change anything under
     no_stylesheets = True
     use_embedded_content = False
     needs_subscription = True
-    articles_are_obfuscated = True
+    #: Set to True and implement :meth:`get_obfuscated_article` to handle
+    #: websites that try to make it difficult to scrape content.
+    # If you set `articles_are_obfuscated` this method is called with
+    #    every article URL. It should return the path to a file on the filesystem
+    #    that contains the article HTML. That file is processed by the recursive
+    #    HTML fetching engine, so it can contain links to pages/images on the web.
+    #
+    #    This method is typically useful for sites that try to make it difficult to
+    #    access article content automatically.
+    # <https://manual.calibre-ebook.com/_modules/calibre/web/feeds/news.html>
+    # e.g. https://searchcode.com/codesearch/view/18433702/
+    articles_are_obfuscated = False
+
     apikey = '19eg0e47pbT32z4793Tf021k99Afl889'
     index_url = u'https://getpocket.com'
     read_api_url = index_url + u'/v3/get'
     modify_api_url = index_url + u'/v3/send'
     legacy_login_url = index_url + u'/l'  # We use this to cheat oAuth
     articles = []
+
+    encoding = 'utf8'
+
+    # To filter by tag this needs to be a single tag in quotes; IE 'calibre'
+    only_pull_tag         = None
 
     def get_browser(self, *args, **kwargs):
         """
@@ -69,10 +105,13 @@ class Pocket(BasicNewsRecipe):
             br.submit()
         else:
             self.user_error("This Recipe requires authentication")
+        print('br:' ,br)
         return br
 
     def get_auth_uri(self):
         """Quick function to return the authentication part of the url"""
+        if self.title_with_date:
+            self.title = 'Pocket+ [' + get_date() + ']'
         uri = ""
         uri = u'{0}&apikey={1!s}'.format(uri, self.apikey)
         if self.username is None or self.password is None:
@@ -82,50 +121,60 @@ class Pocket(BasicNewsRecipe):
             uri = u'{0}&password={1!s}'.format(uri, self.password)
         return uri
 
-    def get_pull_articles_uri(self):
+    def get_pull_articles_uri(self, tag):
+        """Get articles based on tag.
+        """
         uri = ""
-        uri = u'{0}&state={1}'.format(uri, u'unread')
+        uri = u'{0}&state={1}'.format(uri, self.to_pull)
         uri = u'{0}&contentType={1}'.format(uri, u'article')
         uri = u'{0}&sort={1}'.format(uri, self.sort_method)
+        uri = u'{0}&tag={1}'.format(uri, tag)
         uri = u'{0}&count={1!s}'.format(uri, self.max_articles_per_feed)
-        if self.only_pull_tag is not None:
-            uri = u'{0}&tag={1}'.format(uri, self.only_pull_tag)
         return uri
 
     def parse_index(self):
-        pocket_feed = []
-        fetch_url = u"{0}?{1}{2}".format(
-            self.read_api_url,
-            self.get_auth_uri(),
-            self.get_pull_articles_uri()
-        )
-        try:
-            request = urllib2.Request(fetch_url)
-            response = urllib2.urlopen(request)
-            pocket_feed = json.load(response)['list']
-        except urllib2.HTTPError as e:
-            self.log.exception("Pocket returned an error: {0}".format(e.info()))
-            return []
-        except urllib2.URLError as e:
-            self.log.exception("Unable to connect to getpocket.com's api: {0}\nurl: {1}".format(e, fetch_url))
-            return []
+        """Parse an index based on self.tags. '' tag is called "The latest"""
+        tags = self.tags
+        articles_tags = []
+        for tag in tags:
+            self.articles = []
+            pocket_feed = []
+            fetch_url = u"{0}?{1}{2}".format(
+                self.read_api_url,
+                self.get_auth_uri(),
+                self.get_pull_articles_uri(tag)
+            )
+            try:
+                request = urllib2.Request(fetch_url)
+                response = urllib2.urlopen(request)
+                pocket_feed = json.load(response)['list']
+            except urllib2.HTTPError as e:
+                self.log.exception("Pocket returned an error: {0}".format(e.info()))
+                return []
+            except urllib2.URLError as e:
+                self.log.exception("Unable to connect to getpocket.com's api: {0}\nurl: {1}".format(e, fetch_url))
+                return []
 
-        if len(pocket_feed) < self.minimum_articles:
-            self.mark_as_read_after_dl = False
-            self.user_error("Only {0} articles retrieved, minimum_articles not reached".format(len(pocket_feed)))
+            if len(pocket_feed) < self.minimum_articles:  # for pocket_feed
+                #self.mark_as_read_after_dl = False
+                self.log.exception("Tag has no articles: {0}".format(tag))
+            else:
+              for pocket_article in pocket_feed.iteritems():
 
-        for pocket_article in pocket_feed.iteritems():
-            self.articles.append({
-                'item_id':      pocket_article[0],
-                'title':        pocket_article[1]['resolved_title'],
-                'date':         pocket_article[1]['time_updated'],
-                'url':          u'{0}/a/read/{1}'.format(self.index_url, pocket_article[0]),
-                'real_url':     pocket_article[1]['resolved_url'],
-                'description':  pocket_article[1]['excerpt'],
-                'sort':         pocket_article[1]['sort_id']
-            })
-        self.articles = sorted(self.articles, key=operator.itemgetter('sort'))
-        return [("My Pocket Articles for {0}".format(strftime('[%I:%M %p]')), self.articles)]
+                self.articles.append({
+                    'item_id':      pocket_article[0],
+                    'title':        pocket_article[1]['resolved_title'],
+                    'date':         pocket_article[1]['time_updated'],
+                    'url':          u'{0}/a/read/{1}'.format(self.index_url, pocket_article[0]),
+                    'real_url':     pocket_article[1]['resolved_url'],
+                    'description':  pocket_article[1]['excerpt'],
+                    'sort':         pocket_article[1]['sort_id'],
+                })
+              if tag == '':
+                tag = "The latest"
+              self.articles = sorted(self.articles, key=operator.itemgetter('sort'))
+              articles_tags.append([tag, self.articles])
+        return articles_tags
 
     def get_textview(self, url):
         """
@@ -134,18 +183,49 @@ class Pocket(BasicNewsRecipe):
          We need to pull the article, retrieve the formcheck id, then use it
          to querty for the json version
         This function will break when pocket hates us
+
+	<input type="hidden" class="field-form-route" name="route" value="" />
+	<input type="hidden" class="field-form-check" name="form_check" value="d524abc2d97e20849d98eff0454e0eae853949b0a79933c984eb5bf53c403203" />
+	<input type="hidden" class="field-form-src" name="src" value="" />
+
         """
         ajax_url = self.index_url + u'/a/x/getArticle.php'
-        soup = self.index_to_soup(url)
-        fc_tag = soup.find('script', text=re.compile("formCheck"))
-        fc_id = re.search(r"formCheck = \'([\d\w]+)\';", fc_tag).group(1)
+        soup = self.index_to_soup(url) # html text
+        print soup
+        match = re.search('form_check" value="(?P<form_check>.*)"', str(soup))
+        if match:
+            fc_id = match.group('form_check')
+        print 'fc_id', fc_id
         article_id = url.split("/")[-1]
-        data = urllib.urlencode({'itemId': article_id, 'formCheck': fc_id})
-        try:
-            response = self.browser.open(ajax_url, data)
-        except urllib2.HTTPError as e:
-            self.log.exception("unable to get textview {0}".format(e.info()))
-            raise e
+        print('ai', article_id)
+        data = urllib.urlencode({'itemId': article_id, 'form_check': fc_id})
+        print('data', data)
+        #try:
+        print(ajax_url)
+        print(data)
+        response = self.browser.open(ajax_url, data)
+        #except urllib2.HTTPError as e:
+        #    self.log.exception("unable to get textview {0}".format(e.info()))
+        #    raise e
+        import sys
+        # to load pages
+        sys.path.append('/home/magnus/work/opt/miniconda2/lib/python2.7/site-packages')
+        import requests
+        #import ipdb; ipdb.set_trace() # this worked :-)
+        r = requests.get(ajax_url, params=data)
+
+        from httplib2 import Http
+        from urllib import urlencode
+        h = Http()
+        #>>> data = dict(name="Joe", comment="A test comment")
+        resp, content = h.request(ajax_url, "POST", data)
+        print resp
+        print content
+        print r
+        print r.text.read()
+        print r.status_code
+        print response
+        print json.load(response)#['article']
         return json.load(response)['article']
 
     def get_obfuscated_article(self, url):
@@ -154,17 +234,19 @@ class Pocket(BasicNewsRecipe):
         parsed by calibre.
         """
         article = self.get_textview(url)
-        template = Template('<h1>$title</h1><div class="body">$body</div>')
-        with tempfile.NamedTemporaryFile(delete=False) as tf:
-            tmpbody = article['article']
-            for img in article['images']:
-                imgdiv = '<div id="RIL_IMG_{0}" class="RIL_IMG"></div>'.format(article['images'][img]['image_id'])
-                imgtag = '<img src="{0}" \>'.format(article['images'][img]['src'])
-                tmpbody = tmpbody.replace(imgdiv, imgtag)
 
+        template = Template('<h2>$title</h2>\
+                <small><a href="$link">$link</a></small>\
+                <div class="body">$body</div>')
+
+        for image in range(len(article['images'])):
+            article['article'] = article['article'].replace("<div id=\"RIL_IMG_" + str(image + 1) + "\" class=\"RIL_IMG\"></div>", "<img src=\"{0}\" \>".format(article['images'][str(image + 1)]['src']))
+
+        with tempfile.NamedTemporaryFile(delete=False) as tf:
             tf.write(template.safe_substitute(
                 title=article['title'],
-                body=tmpbody
+                link=article['resolvedUrl'],
+                body=article['article'],
                 ))
         return tf.name
 
@@ -182,7 +264,7 @@ class Pocket(BasicNewsRecipe):
         )
         try:
             request = urllib2.Request(mark_read_url)
-            response = urllib2.urlopen(request)
+            urllib2.urlopen(request)
         except urllib2.HTTPError as e:
             self.log.exception('Pocket returned an error while archiving articles: {0}'.format(e))
             return []
@@ -205,8 +287,9 @@ class Pocket(BasicNewsRecipe):
             from calibre.ebooks import calibre_cover
             title = self.title if isinstance(self.title, unicode) else \
                 self.title.decode('utf-8', 'replace')
+            title = '#' + self.only_pull_tag
             date = strftime(self.timefmt)
-            time = strftime('[%I:%M %p]')
+            time = strftime('%I:%M %p')
             img_data = calibre_cover(title, date, time)
             cover_file.write(img_data)
             cover_file.flush()
@@ -221,5 +304,3 @@ class Pocket(BasicNewsRecipe):
         else:
             self.log.exception(error_message)
             raise RuntimeError(error_message)
-
-# vim:ft=python tabstop=8 expandtab shiftwidth=4 softtabstop=4
